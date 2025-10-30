@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sinju's Store</title>
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      background-color: #f8f9fc;
+      color: #222;
+    }
+
+    header {
+      background: #2e86de;
+      color: white;
+      padding: 15px 30px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    header .logo {
+      font-size: 22px;
+      font-weight: bold;
+    }
+
+    nav a {
+      color: white;
+      text-decoration: none;
+      margin: 0 10px;
+      font-weight: 500;
+    }
+
+    nav a:hover {
+      text-decoration: underline;
+    }
+
+    /* Hero Section */
+    .hero {
+      text-align: center;
+      padding: 80px 20px;
+      background: linear-gradient(to right, #74b9ff, #0984e3);
+      color: white;
+    }
+
+    .hero button {
+      margin-top: 20px;
+      background: white;
+      color: #0984e3;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 25px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    .hero button:hover {
+      background: #dfe6e9;
+    }
+
+    /* Products */
+    .product-list {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 25px;
+      padding: 40px;
+    }
+
+    .product {
+      background: white;
+      border-radius: 10px;
+      box-shadow: 0 5px 10px rgba(0,0,0,0.1);
+      text-align: center;
+      padding: 20px;
+      transition: 0.3s;
+    }
+
+    .product:hover {
+      transform: translateY(-5px);
+    }
+
+    .product img {
+      width: 100%;
+      border-radius: 10px;
+    }
+
+    .product h2 {
+      margin: 10px 0;
+      font-size: 18px;
+    }
+
+    .product p {
+      font-weight: bold;
+      color: #0984e3;
+      margin-bottom: 10px;
+    }
+
+    .product button {
+      background: #2e86de;
+      color: white;
+      border: none;
+      padding: 8px 15px;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+
+    .product button:hover {
+      background: #1e5fa8;
+    }
+
+    /* Cart */
+    .cart {
+      background: white;
+      width: 90%;
+      max-width: 700px;
+      margin: 40px auto;
+      padding: 25px;
+      border-radius: 12px;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    }
+
+    .cart ul {
+      list-style: none;
+      margin-bottom: 20px;
+    }
+
+    .cart ul li {
+      background: #f1f3f5;
+      padding: 10px;
+      margin: 8px 0;
+      border-radius: 6px;
+    }
+
+    #place-order-btn {
+      background: #0984e3;
+      color: white;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+
+    #place-order-btn:hover {
+      background: #065cb3;
+    }
+
+    /* Footer */
+    footer {
+      background: #222;
+      color: white;
+      text-align: center;
+      padding: 15px;
+      font-size: 14px;
+      margin-top: 40px;
+    }
+  </style>
+</head>
+
+<body>
+  <header>
+    <div class="logo">🛍 Sinju's Store</div>
+    <nav>
+      <a href="#">Home</a>
+      <a href="#products">Products</a>
+      <a href="#cart">Cart</a>
+    </nav>
+  </header>
+
+  <section class="hero">
+    <h1>Welcome to Sinju's E-Commerce Store</h1>
+    <p>Shop trendy gadgets and accessories at affordable prices!</p>
+    <button onclick="scrollToProducts()">Shop Now</button>
+  </section>
+
+  <section id="products" class="product-list">
+    <div class="product">
+      <img src="https://via.placeholder.com/200" alt="Smart Watch">
+      <h2>Smart Watch</h2>
+      <p>₹2499</p>
+      <button onclick="addToCart('Smart Watch', 2499)">Add to Cart</button>
+    </div>
+
+    <div class="product">
+      <img src="https://via.placeholder.com/200" alt="Wireless Earbuds">
+      <h2>Wireless Earbuds</h2>
+      <p>₹1499</p>
+      <button onclick="addToCart('Wireless Earbuds', 1499)">Add to Cart</button>
+    </div>
+
+    <div class="product">
+      <img src="https://via.placeholder.com/200" alt="Bluetooth Speaker">
+      <h2>Bluetooth Speaker</h2>
+      <p>₹1999</p>
+      <button onclick="addToCart('Bluetooth Speaker', 1999)">Add to Cart</button>
+    </div>
+
+    <div class="product">
+      <img src="https://via.placeholder.com/200" alt="Power Bank">
+      <h2>Power Bank 10000mAh</h2>
+      <p>₹1299</p>
+      <button onclick="addToCart('Power Bank 10000mAh', 1299)">Add to Cart</button>
+    </div>
+  </section>
+
+  <section id="cart" class="cart">
+    <h2>Your Cart 🛒</h2>
+    <ul id="cart-items"></ul>
+    <p id="total"></p>
+    <form action="/cgi-bin/order.cgi" method="POST">
+      <input type="hidden" name="orderData" id="orderData">
+      <button type="submit" id="place-order-btn">Place Order</button>
+    </form>
+  </section>
+
+  <footer>
+    <p>© 2025 Sinju’s Store | Designed for CSE Mini Project</p>
+  </footer>
+
+  <script>
+    let cart = [];
+
+    function addToCart(product, price) {
+      cart.push({ product, price });
+      displayCart();
+    }
+
+    function displayCart() {
+      const cartList = document.getElementById('cart-items');
+      const totalDisplay = document.getElementById('total');
+      const orderInput = document.getElementById('orderData');
+
+      cartList.innerHTML = '';
+      let total = 0;
+
+      if (cart.length === 0) {
+        cartList.innerHTML = '<p>Your cart is empty.</p>';
+        totalDisplay.textContent = '';
+        return;
+      }
+
+      cart.forEach(item => {
+        total += item.price;
+        cartList.innerHTML += <li>${item.product} - ₹${item.price}</li>;
+      });
+
+      totalDisplay.textContent = `Total: ₹${total}`;
+      orderInput.value = JSON.stringify(cart);
+    }
+
+    function scrollToProducts() {
+      document.getElementById("products").scrollIntoView({ behavior: 'smooth' });
+    }
+  </script>
+</body>
+</html>
